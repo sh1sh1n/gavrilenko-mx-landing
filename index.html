@@ -119,27 +119,6 @@
             background-color: #FFF;
         }
 
-        .btn-secondary {
-            display: inline-block;
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--text-light);
-            font-family: 'Oswald', sans-serif;
-            font-weight: 700;
-            font-size: 1.1rem;
-            padding: 15px 35px;
-            border-radius: 6px;
-            text-transform: uppercase;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            cursor: pointer;
-        }
-
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.15);
-            border-color: var(--accent-blue);
-            transform: translateY(-2px);
-        }
-
         section {
             padding: 110px 20px;
             position: relative;
@@ -460,11 +439,11 @@
             color: var(--text-muted);
         }
 
-        /* Партнеры */
+        /* Партнеры (Сетка перестроена на 4 колонки) */
         .partners-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
         }
 
         .partner-card {
@@ -488,13 +467,13 @@
             filter: grayscale(0%) brightness(100%);
         }
 
-        /* Новая форма записи на сайте */
+        /* Секция Записи (WhatsApp CTA) */
         .booking-section {
-            background: radial-gradient(circle at top right, rgba(0, 163, 221, 0.1), transparent 60%);
+            background: radial-gradient(circle at top center, rgba(0, 163, 221, 0.12), transparent 70%);
         }
 
         .booking-wrapper {
-            max-width: 600px;
+            max-width: 650px;
             margin: 0 auto;
             background: var(--glass-bg);
             backdrop-filter: blur(20px);
@@ -503,44 +482,30 @@
             padding: 50px 40px;
             border-radius: 16px;
             box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+            text-align: center;
         }
 
-        .booking-form {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            margin-top: 30px;
+        /* Блок Instagram Link */
+        .instagram-section {
+            background: linear-gradient(180deg, var(--bg-main) 0%, #0c0a12 100%);
         }
 
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
+        .insta-box {
+            max-width: 700px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, rgba(225, 48, 108, 0.1) 0%, rgba(64, 93, 230, 0.1) 100%);
+            border: 1px solid rgba(225, 48, 108, 0.25);
+            padding: 50px 40px;
+            border-radius: 16px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s ease;
         }
 
-        .form-group label {
-            font-size: 0.85rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--text-muted);
-        }
-
-        .form-control {
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 14px 18px;
-            border-radius: 6px;
-            color: #FFF;
-            font-family: inherit;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--accent-blue);
-            box-shadow: 0 0 10px rgba(0, 163, 221, 0.2);
+        .insta-box:hover {
+            border-color: rgba(225, 48, 108, 0.6);
+            box-shadow: 0 15px 45px rgba(225, 48, 108, 0.15);
+            transform: translateY(-3px);
         }
 
         /* Футер */
@@ -596,9 +561,12 @@
 
         /* Адаптивность */
         @media (max-width: 1024px) {
-            .grid-3, .partners-grid {
+            .grid-3 {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 25px;
+            }
+            .partners-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
             .hero h1 { font-size: 3.2rem; }
         }
@@ -617,7 +585,7 @@
             .logo-img { height: 50px; }
 
             .nav-menu {
-                display: none; /* Упрощено для мобильной производительности */
+                display: none;
                 flex-direction: column;
                 position: absolute;
                 top: 80px;
@@ -640,7 +608,6 @@
 
             .hero h1 { font-size: 2.3rem; }
             .hero p { font-size: 1.15rem; }
-            .hero-ctas { flex-direction: column; gap: 15px; }
 
             .grid-3, .partners-grid {
                 grid-template-columns: 1fr;
@@ -648,7 +615,7 @@
 
             section { padding: 70px 15px; }
             .section-title { font-size: 2rem; }
-            .booking-wrapper { padding: 30px 20px; }
+            .booking-wrapper, .insta-box { padding: 35px 20px; }
             .map-container { height: 300px; }
         }
     </style>
@@ -772,8 +739,7 @@
             <h1>Покоряй бездорожье вместе с чемпионами</h1>
             <p>Обучение с 5 лет до уровня Pro</p>
             <div class="hero-ctas">
-                <a href="#booking" class="btn-primary">Записаться на сайте</a>
-                <a href="https://wa.me/77019628596?text=Здравствуйте!%20Хочу%20записаться%20на%20пробное%20занятие." class="btn-secondary" target="_blank" rel="noopener">Записаться через WhatsApp</a>
+                <a href="https://wa.me/77019628596?text=Здравствуйте!%20Хочу%20записаться%20на%20пробное%20занятие." class="btn-primary" target="_blank" rel="noopener">Записаться через WhatsApp</a>
             </div>
         </div>
     </section>
@@ -872,15 +838,14 @@
         </div>
     </section>
 
-    <section id="gallery" class="container">
-        <h2 class="section-title">Жизнь школы в Instagram</h2>
-        <p style="text-align: center; margin-bottom: 40px; font-weight: 500;">
-            Подписывайтесь на <a href="https://www.instagram.com/mxschoolgavrilenko17/" target="_blank" style="color: var(--accent-blue-text); font-weight: 700;">@mxschoolgavrilenko17</a>
-        </p>
-        
-        <div class="instagram-widget-container" style="min-height: 400px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--glass-border); background: var(--glass-bg); border-radius: 12px; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);">
-                <div class="embedsocial-hashtag" data-ref="ff4641271f68c89d73f09169ff38e0f83b2675e4" data-lazyload="yes" style="width: 100%;"></div> 
-                <script> (function(d, s, id) { var js; if (d.getElementById(id)) {return;} js = d.createElement(s); js.id = id; js.src = "https://embedsocial.com/cdn/ht.js"; d.getElementsByTagName("head")[0].appendChild(js); }(document, "script", "EmbedSocialHashtagScript")); </script>
+    <section id="gallery" class="instagram-section">
+        <div class="container">
+            <h2 class="section-title">Жизнь школы</h2>
+            <div class="insta-box">
+                <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: #FFF;">Мы в Instagram</h3>
+                <p style="color: var(--text-muted); margin-bottom: 35px; font-size: 1.1rem;"> Следите за актуальным расписанием, анонсами туров, фотоотчётами с заездов и яркими бэкстейджами из жизни школы.</p>
+                <a href="https://www.instagram.com/mxschoolgavrilenko17/" class="btn-primary" target="_blank" rel="noopener noreferrer" style="background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); color: #FFF; box-shadow: 0 4px 20px rgba(220, 39, 67, 0.25);">Открыть @mxschoolgavrilenko17</a>
+            </div>
         </div>
     </section>
 
@@ -904,30 +869,11 @@
 
     <section id="booking" class="booking-section">
         <div class="container">
-            <h2 class="section-title">Записаться на тренировку</h2>
+            <h2 class="section-title">Запись на тренировку</h2>
             <div class="booking-wrapper">
-                <p style="text-align: center; color: var(--text-muted);">Заполните форму, и наш администратор свяжется с вами для подтверждения времени занятия.</p>
-                <form class="booking-form" onsubmit="alert('Спасибо за заявку! Мы свяжемся с вами в ближайшее время.'); return false;">
-                    <div class="form-group">
-                        <label for="name">Ваше имя</label>
-                        <input type="text" id="name" class="form-control" placeholder="Алексей" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="phone">Номер телефона</label>
-                        <input type="tel" id="phone" class="form-control" placeholder="+7 (701) 000-0000" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="service">Направление</label>
-                        <select id="service" class="form-control">
-                            <option>Пробное индивидуальное занятие</option>
-                            <option>Детские занятия (5+)</option>
-                            <option>Тренировки для девушек</option>
-                            <option>Эндуро-туры</option>
-                            <option>Подготовка Pro</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn-primary" style="margin-top: 10px;">Отправить заявку</button>
-                </form>
+                <h3 style="margin-bottom: 15px; color: #FFF;">Готовы к первому выезду?</h3>
+                <p style="color: var(--text-muted); margin-bottom: 35px;">Все коммуникации по бронированию времени и координации тренировок мы ведём через удобный чат WhatsApp. Нажмите кнопку ниже, чтобы начать диалог с администратором.</p>
+                <a href="https://wa.me/77019628596?text=Здравствуйте!%20Хочу%20записаться%20на%20тренировку." class="btn-primary" target="_blank" rel="noopener">Написать в WhatsApp</a>
             </div>
         </div>
     </section>
@@ -939,6 +885,12 @@
                 <div class="card partner-card">
                     <img src="//mitas-moto.kz/image/catalog/mitas-logo-shadow.svg" class="partner-logo" alt="Mitas" loading="lazy">
                     <p>Лучшие шины для эндуро и мотокросса</p>
+                </div>
+            </a>
+            <a href="https://heidenau.kz" target="_blank" rel="noopener noreferrer">
+                <div class="card partner-card">
+                    <img src="https://heidenau.kz/image/catalog/logo.svg" class="partner-logo" alt="Heidenau" loading="lazy" style="height: 38px;">
+                    <p>Премиальные немецкие мотошины для любых условий</p>
                 </div>
             </a>
             <a href="//cassida.kz" target="_blank" rel="noopener noreferrer">
@@ -986,7 +938,7 @@
     </footer>
 
     <script>
-        // Простой скрипт управления мобильным меню
+        // Управление мобильным меню
         const burgerMenu = document.getElementById('burgerMenu');
         const navMenu = document.getElementById('navMenu');
 
@@ -994,7 +946,6 @@
             navMenu.classList.toggle('mobile-open');
         });
 
-        // Закрывать меню при клике по ссылке
         document.querySelectorAll('.nav-link').forEach(link => {
             link.addEventListener('click', () => {
                 navMenu.classList.remove('mobile-open');
