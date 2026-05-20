@@ -53,6 +53,7 @@
     <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=XXXXXXXXXXXXXXX&ev=PageView&noscript=1"/></noscript>
 
     <style>
+        /* Переменные по умолчанию (Тёмная тема) */
         :root {
             --bg-main: #060608;
             --accent-gold: #FEC50C;
@@ -63,6 +64,43 @@
             --glass-bg: rgba(26, 26, 46, 0.45);
             --glass-border: rgba(77, 203, 255, 0.15);
             --glass-nav: rgba(6, 6, 8, 0.75);
+            color-scheme: dark; /* Говорит браузеру, что по умолчанию тема темная */
+        }
+        
+        /* Цвета для светлой темы (активируются через класс или системные настройки) */
+        :root.light-theme {
+            --bg-main: #F4F4F5;
+            --accent-gold: #D9A406; /* Чуть темнее для читаемости на белом */
+            --accent-blue: #0077A6; /* Чуть темнее для контраста */
+            --accent-blue-text: #005577;
+            --text-light: #18181B; /* Теперь это темный текст для светлого фона */
+            --text-muted: #52525B;
+            --glass-bg: rgba(255, 255, 255, 0.65);
+            --glass-border: rgba(0, 119, 166, 0.15);
+            --glass-nav: rgba(244, 244, 245, 0.8);
+            color-scheme: light;
+        }
+        
+        /* Автоматическая поддержка системных настроек пользователя */
+        @media (prefers-color-scheme: light) {
+            :root:not(.dark-theme) {
+                /* Если в системе включена светлая тема, и пользователь принудительно не выбрал темную */
+                --bg-main: #F4F4F5;
+                --accent-gold: #D9A406;
+                --accent-blue: #0077A6;
+                --accent-blue-text: #005577;
+                --text-light: #18181B;
+                --text-muted: #52525B;
+                --glass-bg: rgba(255, 255, 255, 0.65);
+                --glass-border: rgba(0, 119, 166, 0.15);
+                --glass-nav: rgba(244, 244, 245, 0.8);
+                color-scheme: light;
+            }
+        }
+        
+        /* Чтобы переходы между темами были плавными, добавим анимацию для body и карточек */
+        body, header, .card, .faq-item, .insta-box, .booking-wrapper, a, h1, h2, h3, p {
+            transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
         }
 
         * {
@@ -720,6 +758,9 @@
 
         <div class="header-right">
             <a href="tel:+77019628596" class="header-phone">+7 701 962 8596</a>
+            <button id="themeToggle" style="background: none; border: none; cursor: pointer; font-size: 1.3rem; padding: 5px; display: flex; align-items: center;" title="Сменить тему">
+                🌓
+            </button>
             <a href="https://wa.me/77019628596?text=Здравствуйте!%20Хочу%20записаться%20на%20пробное%20занятие." class="btn-primary" style="padding: 10px 20px; font-size: 0.9rem;" target="_blank" rel="noopener">WhatsApp</a>
             <div class="burger-menu" id="burgerMenu">
                 <div class="burger-bar"></div>
@@ -937,6 +978,35 @@
         </div>
     </footer>
 
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const root = document.documentElement;
+        
+        // Проверяем, сохранял ли пользователь выбор ранее
+        const savedTheme = localStorage.getItem('theme');
+        
+        if (savedTheme) {
+            root.classList.add(savedTheme);
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            // Если сейчас светлая тема (по классу или по системе)
+            const isCurrentlyLight = root.classList.contains('light-theme') || 
+                (!root.classList.contains('dark-theme') && window.matchMedia('(prefers-color-scheme: light)').matches);
+        
+            if (isCurrentlyLight) {
+                // Переключаем на темную
+                root.classList.remove('light-theme');
+                root.classList.add('dark-theme');
+                localStorage.setItem('theme', 'dark-theme');
+            } else {
+                // Переключаем на светлую
+                root.classList.remove('dark-theme');
+                root.classList.add('light-theme');
+                localStorage.setItem('theme', 'light-theme');
+            }
+        });
+    </script>
     <script>
         // Управление мобильным меню
         const burgerMenu = document.getElementById('burgerMenu');
