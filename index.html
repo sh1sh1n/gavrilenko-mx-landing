@@ -65,7 +65,7 @@
             --glass-border: rgba(77, 203, 255, 0.15);
             --glass-nav: rgba(6, 6, 8, 0.75);
             --shadow-color: rgba(0, 0, 0, 0.4);
-            --glow-effect: rgba(0, 163, 221, 0.35); /* Неоновое свечение для темной темы */
+            --glow-effect: rgba(0, 163, 221, 0.35);
             color-scheme: dark;
         }
 
@@ -81,7 +81,7 @@
             --glass-border: rgba(0, 119, 166, 0.2);
             --glass-nav: rgba(244, 244, 245, 0.85);
             --shadow-color: rgba(0, 71, 102, 0.08);
-            --glow-effect: rgba(0, 119, 166, 0.2); /* Мягкое свечение для светлой темы */
+            --glow-effect: rgba(0, 119, 166, 0.2);
             color-scheme: light;
         }
 
@@ -132,7 +132,6 @@
             color: inherit;
         }
 
-        /* Кнопки с эффектом неонового импульса при наведении */
         .btn-primary {
             display: inline-block;
             background-color: var(--accent-gold);
@@ -206,8 +205,14 @@
             box-shadow: 0 10px 30px var(--shadow-color);
         }
 
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+
         .logo-img {
             height: 65px;
+            display: block;
             transition: transform 0.3s ease;
         }
 
@@ -247,6 +252,23 @@
             font-size: 1.15rem;
             font-weight: 500;
             color: var(--accent-gold);
+            white-space: nowrap; /* Исключает разрыв номера */
+        }
+
+        .theme-toggle-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.3rem;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease;
+        }
+
+        .theme-toggle-btn:hover {
+            transform: scale(1.1);
         }
 
         .burger-menu {
@@ -317,7 +339,7 @@
             letter-spacing: 0.05em;
         }
 
-        /* Карточки с эффектом Hover-свечения */
+        /* Карточки */
         .grid-3 {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -337,7 +359,6 @@
             overflow: hidden;
         }
 
-        /* Добавляем неоновое свечение (Glow-effect) на карточки при наведении */
         .card:hover {
             transform: translateY(-6px);
             border-color: rgba(77, 203, 255, 0.4);
@@ -396,7 +417,7 @@
             letter-spacing: 0.05em;
         }
 
-        /* Блок Instagram с градиентным свечением */
+        /* Блок Instagram */
         .instagram-section {
             background: var(--bg-main);
         }
@@ -501,7 +522,7 @@
             margin-bottom: 15px;
         }
 
-        /* Футер и Карта */
+        /* Футер */
         .map-container {
             width: 100%;
             height: 400px;
@@ -541,7 +562,6 @@
             font-size: 1.05rem;
         }
 
-        /* Анимация плавного перетекания стилей */
         body, header, .card, .faq-item, .insta-box, .booking-wrapper, a, h1, h2, h3, p, input, select {
             transition: background-color 0.4s cubic-bezier(0.25, 1, 0.5, 1), 
                         color 0.4s cubic-bezier(0.25, 1, 0.5, 1), 
@@ -550,7 +570,7 @@
                         transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        /* Адаптивность */
+        /* Адаптивность и исправление мобильной верстки */
         @media (max-width: 1024px) {
             .grid-3 { grid-template-columns: repeat(2, 1fr); gap: 25px; }
             .partners-grid { grid-template-columns: repeat(2, 1fr); }
@@ -559,19 +579,55 @@
 
         @media (max-width: 768px) {
             header {
-                width: 100%; top: 0; left: 0; transform: none;
-                border-radius: 0; border-left: none; border-right: none; border-top: none;
-                padding: 15px 25px;
+                width: 100%; 
+                top: 0; 
+                left: 0; 
+                transform: none;
+                border-radius: 0; 
+                border: none;
+                border-bottom: 1px solid var(--glass-border);
+                padding: 12px 20px; /* Сужаем отступы */
             }
-            .logo-img { height: 50px; }
+
+            .logo-img { 
+                height: 48px; /* Оптимальная высота под мобильные экраны */
+            }
+
+            .header-right {
+                gap: 15px; /* Уменьшаем зазоры между элементами */
+            }
+
+            .header-phone { 
+                font-size: 1rem; /* Телефон аккуратно встает в ряд */
+            }
+
+            .theme-toggle-btn {
+                font-size: 1.1rem;
+            }
+
             .nav-menu {
-                display: none; flex-direction: column; position: absolute;
-                top: 80px; left: 0; width: 100%; background: var(--glass-nav);
-                padding: 30px; border-bottom: 1px solid var(--glass-border); gap: 20px;
+                display: none; 
+                flex-direction: column; 
+                position: absolute;
+                top: 73px; 
+                left: 0; 
+                width: 100%; 
+                background: var(--glass-nav);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                padding: 30px; 
+                border-bottom: 1px solid var(--glass-border); 
+                gap: 20px;
             }
-            .nav-menu.mobile-open { display: flex; }
-            .burger-menu { display: flex; }
-            .header-right .btn-primary { display: none; }
+
+            .nav-menu.mobile-open { 
+                display: flex; 
+            }
+
+            .burger-menu { 
+                display: flex; 
+            }
+
             .hero h1 { font-size: 2.3rem; }
             .hero p { font-size: 1.15rem; }
             .grid-3, .partners-grid { grid-template-columns: 1fr; }
@@ -682,10 +738,11 @@
 
         <div class="header-right">
             <a href="tel:+77019628596" class="header-phone">+7 701 962 8596</a>
-            <a href="https://wa.me/77019628596?text=Здравствуйте!%20Хочу%20записаться%20на%20пробное%20занятие." class="btn-primary" style="padding: 10px 20px; font-size: 0.9rem;" target="_blank" rel="noopener">WhatsApp</a>
-            <button id="themeToggle" style="background: none; border: none; cursor: pointer; font-size: 1.3rem; padding: 5px; display: flex; align-items: center;" title="Сменить тему">
+            
+            <button id="themeToggle" class="theme-toggle-btn" title="Сменить тему">
                 🌓
             </button>
+
             <div class="burger-menu" id="burgerMenu">
                 <div class="burger-bar"></div>
                 <div class="burger-bar"></div>
