@@ -56,6 +56,7 @@
         :root {
             --bg-main: #060608;
             --accent-gold: #FEC50C;
+            --accent-gold-text: #FEC50C; /* золото в роли ТЕКСТА (контраст-безопасное) */
             --accent-blue: #00A3DD;
             --accent-blue-text: #4DCBFF;
             --text-light: #F5F5F5;
@@ -66,12 +67,17 @@
             --glass-nav: rgba(6, 6, 8, 0.75);
             --shadow-color: rgba(0, 0, 0, 0.4);
             --glow-effect: rgba(0, 163, 221, 0.35);
+            /* Атмосферный фон (свечения) */
+            --glow-1: rgba(0, 163, 221, 0.13);
+            --glow-2: rgba(254, 197, 12, 0.07);
+            --noise-opacity: 0.05;
             color-scheme: dark;
         }
 
         :root.light-theme {
             --bg-main: #F4F4F5;
             --accent-gold: #D9A406; 
+            --accent-gold-text: #8A6100; /* тёмная амбра: контраст ~5:1 на светлом */
             --accent-blue: #0077A6; 
             --accent-blue-text: #005577;
             --text-light: #18181B; 
@@ -82,6 +88,9 @@
             --glass-nav: rgba(244, 244, 245, 0.85);
             --shadow-color: rgba(0, 71, 102, 0.08);
             --glow-effect: rgba(0, 119, 166, 0.2);
+            --glow-1: rgba(0, 119, 166, 0.10);
+            --glow-2: rgba(217, 164, 6, 0.09);
+            --noise-opacity: 0.025;
             color-scheme: light;
         }
 
@@ -89,6 +98,7 @@
             :root:not(.dark-theme) {
                 --bg-main: #F4F4F5;
                 --accent-gold: #D9A406;
+                --accent-gold-text: #8A6100;
                 --accent-blue: #0077A6;
                 --accent-blue-text: #005577;
                 --text-light: #18181B;
@@ -99,6 +109,9 @@
                 --glass-nav: rgba(244, 244, 245, 0.85);
                 --shadow-color: rgba(0, 71, 102, 0.08);
                 --glow-effect: rgba(0, 119, 166, 0.2);
+                --glow-1: rgba(0, 119, 166, 0.10);
+                --glow-2: rgba(217, 164, 6, 0.09);
+                --noise-opacity: 0.025;
                 color-scheme: light;
             }
         }
@@ -117,6 +130,31 @@
             line-height: 1.7;
             overflow-x: hidden;
             letter-spacing: -0.01em;
+        }
+
+        /* Атмосфера: мягкие цветные свечения дают ощущение глубины и пространства.
+           Слой фиксированный — контент «проплывает» над ним при скролле. */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: -10;
+            pointer-events: none;
+            background:
+                radial-gradient(70% 55% at 12% 6%, var(--glow-1), transparent 60%),
+                radial-gradient(62% 50% at 88% 16%, var(--glow-2), transparent 58%),
+                radial-gradient(80% 60% at 50% 112%, var(--glow-1), transparent 62%);
+        }
+
+        /* Тонкое зерно убирает бандинг градиентов и добавляет фактуру */
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: -9;
+            pointer-events: none;
+            opacity: var(--noise-opacity);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
         }
 
         h1, h2, h3, h4 {
@@ -251,7 +289,7 @@
             font-family: 'Oswald', sans-serif;
             font-size: 1.15rem;
             font-weight: 500;
-            color: var(--accent-gold);
+            color: var(--accent-gold-text);
             white-space: nowrap; /* Исключает разрыв номера */
         }
 
@@ -332,11 +370,12 @@
         .hero p {
             font-size: 1.6rem;
             margin-bottom: 40px;
-            color: var(--accent-blue-text);
+            color: #6DD3FF; /* фиксированный светлый: оверлей тёмный в обеих темах */
             font-weight: 600;
             font-family: 'Oswald', sans-serif;
             text-transform: uppercase;
             letter-spacing: 0.05em;
+            text-shadow: 0 2px 12px rgba(0,0,0,0.6);
         }
 
         /* Карточки */
@@ -383,7 +422,7 @@
 
         .stat-number {
             font-size: 3.8rem;
-            color: var(--accent-gold);
+            color: var(--accent-gold-text);
             font-family: 'Oswald', sans-serif;
             font-weight: 700;
             margin-bottom: 5px;
@@ -409,7 +448,7 @@
         }
 
         .testimonial-author {
-            color: var(--accent-gold);
+            color: var(--accent-gold-text);
             font-weight: 700;
             font-family: 'Oswald', sans-serif;
             text-transform: uppercase;
@@ -419,7 +458,7 @@
 
         /* Блок Instagram */
         .instagram-section {
-            background: var(--bg-main);
+            background: transparent;
         }
 
         .insta-box {
@@ -523,27 +562,78 @@
         }
 
         /* Футер */
+        footer {
+            background-color: var(--glass-nav);
+            padding: 0 0 30px;
+            text-align: center;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .footer-map-section {
+            position: relative;
+            width: 100%;
+            line-height: 0;
+        }
+
         .map-container {
             width: 100%;
-            height: 400px;
-            margin-bottom: 50px;
-            border: 1px solid var(--glass-border);
-            border-radius: 12px;
+            height: 480px;
             overflow: hidden;
-            box-shadow: 0 15px 40px var(--shadow-color);
         }
 
         .map-container iframe {
             width: 100%;
             height: 100%;
             border: 0;
+            filter: grayscale(0.2) contrast(1.05);
         }
 
-        footer {
+        /* Парящая карточка контактов — тот же «стеклянный» язык, что и у хедера */
+        .footer-float {
+            position: absolute;
+            top: 50%;
+            left: max(24px, calc((100% - 1200px) / 2));
+            transform: translateY(-50%);
+            width: 330px;
+            max-width: calc(100% - 48px);
             background-color: var(--glass-nav);
-            padding: 60px 20px 30px;
-            text-align: center;
-            border-top: 1px solid var(--glass-border);
+            backdrop-filter: blur(18px) saturate(160%);
+            -webkit-backdrop-filter: blur(18px) saturate(160%);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            padding: 32px 30px;
+            box-shadow: 0 16px 50px var(--shadow-color);
+            text-align: left;
+            line-height: 1.7;
+        }
+
+        .footer-float-logo {
+            height: 70px;
+            display: block;
+            margin-bottom: 18px;
+        }
+
+        .footer-float-addr {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 14px;
+        }
+
+        .footer-float-phone {
+            display: inline-block;
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.35rem;
+            font-weight: 500;
+            color: var(--accent-gold-text);
+            margin-bottom: 18px;
+        }
+
+        .footer-float .footer-socials {
+            margin-top: 4px;
+        }
+
+        .footer-bottom {
+            padding-top: 40px;
         }
 
         .footer-links {
@@ -634,7 +724,24 @@
             section { padding: 70px 15px; }
             .section-title { font-size: 2rem; }
             .booking-wrapper, .insta-box { padding: 35px 20px; }
-            .map-container { height: 300px; }
+            .map-container { height: 340px; }
+
+            .footer-float {
+                position: relative;
+                top: auto;
+                left: auto;
+                transform: none;
+                width: auto;
+                max-width: none;
+                margin: -90px 16px 0;
+                text-align: center;
+                z-index: 2;
+            }
+
+            .footer-float-logo {
+                margin-left: auto;
+                margin-right: auto;
+            }
         }
     </style>
 
@@ -770,28 +877,28 @@
         <h2 class="section-title">Наши услуги</h2>
         <div class="grid-3">
             <div class="card">
-                <h3>Тренировки для девушек</h3>
-                <p>Уникальное хобби и раскрытие своего потенциала в безопасной среде.</p>
+                <h3>Мотокросс для детей (с 5 лет)</h3>
+                <p>Дисциплина, координация и безопасный спорт для вашего ребёнка под контролем тренеров.</p>
             </div>
             <div class="card">
-                <h3>Детские занятия (5+)</h3>
-                <p>Дисциплинированный и безопасный спорт для вашего ребенка.</p>
+                <h3>Обучение с нуля</h3>
+                <p>Первая посадка, газ, тормоз и баланс. Для тех, кто никогда не садился на мотоцикл.</p>
             </div>
             <div class="card">
-                <h3>Эндуро-туры</h3>
-                <p>Выезды на природу и преодоление естественных препятствий.</p>
+                <h3>Мотокросс для девушек</h3>
+                <p>Необычное хобби и драйв в безопасной среде — отдельный формат занятий для девушек.</p>
             </div>
             <div class="card">
-                <h3>Корпоративные мероприятия</h3>
-                <p>Нестандартный и адреналиновый тимбилдинг в Астане.</p>
+                <h3>Эндуро-туры в Астане</h3>
+                <p>Выезды на природу, бездорожье и преодоление естественных препятствий с инструктором.</p>
             </div>
             <div class="card">
-                <h3>Тренировки Pro</h3>
-                <p>Улучшение времени на круге и освоение техник «хард эндуро».</p>
+                <h3>Тренировки Pro и хард-эндуро</h3>
+                <p>Улучшение времени на круге и освоение техник хард-эндуро для опытных гонщиков.</p>
             </div>
             <div class="card">
-                <h3>Low-Traction Mastery</h3>
-                <p>Тренинг чувствительности к покрытию и мастерство езды на скользких поверхностях.</p>
+                <h3>Корпоративы и тимбилдинг</h3>
+                <p>Нестандартный адреналиновый формат командного отдыха на мототехнике в Астане.</p>
             </div>
         </div>
     </section>
@@ -934,7 +1041,7 @@
     </section>
 
     <footer>
-        <div class="container">
+        <div class="footer-map-section">
             <div class="map-container">
                 <iframe 
                     src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d488.802216134311!2d71.5791266!3d51.1514852!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x424579eb4ea347c1%3A0xe36ffba6ffce1d60!2sMotoshkola%20Gavrilenko!5e1!3m2!1sen!2skz!4v1771823768213!5m2!1sen!2skz" 
@@ -942,23 +1049,24 @@
                     referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
 
-            <div class="footer-grid">
-                <div>
-                    <img src="/images/logo.svg" style="height: 75px;" alt="Logo">
-                    <p style="margin-top: 15px;">📍 Астана, ул. Талгата Мусабаева, 17</p>
-                    <div class="footer-socials" style="margin-top: 15px;">
-                        <a href="https://www.instagram.com/mxschoolgavrilenko17/" target="_blank">Instagram</a>
-                        <a href="https://wa.me/77019628596" target="_blank">WhatsApp</a>
-                    </div>
+            <div class="footer-float">
+                <a href="#"><img src="/images/logo.svg" class="footer-float-logo" alt="Gavrilenko MX School"></a>
+                <p class="footer-float-addr">📍 Астана, ул. Талгата Мусабаева, 17</p>
+                <a href="tel:+77019628596" class="footer-float-phone">+7 701 962 8596</a>
+                <div class="footer-socials">
+                    <a href="https://www.instagram.com/mxschoolgavrilenko17/" target="_blank" rel="noopener">Instagram</a>
+                    <a href="https://wa.me/77019628596" target="_blank" rel="noopener">WhatsApp</a>
                 </div>
             </div>
+        </div>
 
+        <div class="container footer-bottom">
             <div class="footer-links">
                 <a href="#">Политика конфиденциальности</a>
                 <span>|</span>
                 <a href="#">Правовая информация</a>
             </div>
-            <p style="font-size: 0.8rem; color: #52525B; margin-top: 20px;">© 2026 Gavrilenko MX School. Все права защищены.</p>
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 20px;">© 2026 Gavrilenko MX School. Все права защищены.</p>
         </div>
     </footer>
 
