@@ -65,6 +65,7 @@
             --glass-bg: rgba(26, 26, 46, 0.45);
             --glass-border: rgba(77, 203, 255, 0.15);
             --glass-nav: rgba(6, 6, 8, 0.75);
+            --panel-bg: rgba(11, 11, 17, 0.93); /* плотный фон панели над картой (blur по iframe не работает) */
             --shadow-color: rgba(0, 0, 0, 0.4);
             --glow-effect: rgba(0, 163, 221, 0.35);
             /* Атмосферный фон (свечения) */
@@ -86,6 +87,7 @@
             --glass-bg: rgba(255, 255, 255, 0.85);
             --glass-border: rgba(0, 119, 166, 0.2);
             --glass-nav: rgba(244, 244, 245, 0.85);
+            --panel-bg: rgba(247, 247, 249, 0.95);
             --shadow-color: rgba(0, 71, 102, 0.08);
             --glow-effect: rgba(0, 119, 166, 0.2);
             --glow-1: rgba(0, 119, 166, 0.10);
@@ -107,6 +109,7 @@
                 --glass-bg: rgba(255, 255, 255, 0.85);
                 --glass-border: rgba(0, 119, 166, 0.2);
                 --glass-nav: rgba(244, 244, 245, 0.85);
+                --panel-bg: rgba(247, 247, 249, 0.95);
                 --shadow-color: rgba(0, 71, 102, 0.08);
                 --glow-effect: rgba(0, 119, 166, 0.2);
                 --glow-1: rgba(0, 119, 166, 0.10);
@@ -629,8 +632,7 @@
             max-width: calc(100% - 48px);
             background:
                 linear-gradient(160deg, rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0) 55%),
-                var(--glass-nav),
-                var(--glass-nav);
+                var(--panel-bg);
             border: 1px solid var(--glass-border);
             border-radius: 16px;
             padding: 30px 30px 28px;
